@@ -45,14 +45,13 @@ require('lazy').setup({
   require 'kickstart/plugins/todo-comments',
 
   require 'kickstart/plugins/mini',
-
   require 'kickstart/plugins/treesitter',
 
   require 'kickstart/plugins/render-markdown',
 
   require 'kickstart/plugins/precognition',
 
-  require 'kickstart/plugins/markdown-preview',
+  -- require 'kickstart/plugins/markdown-preview',
 
   require 'kickstart/plugins/wilder',
 
@@ -81,6 +80,20 @@ require('lazy').setup({
   require 'kickstart/plugins/scope',
 
   require 'kickstart/plugins/trouble',
+
+  require 'kickstart/plugins/cellular-automaton',
+
+  require 'kickstart/plugins/typr',
+
+  require 'kickstart/plugins/avante',
+
+  require 'kickstart/plugins/git-conflict',
+
+  require 'kickstart/plugins/fugitive',
+
+  require 'kickstart/plugins/chameleon',
+
+  require 'kickstart/plugins/java',
   -- require 'kickstart/plugins/snacks',
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
@@ -93,7 +106,7 @@ require('lazy').setup({
   --
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
-  require 'kickstart.plugins.lint',
+  -- require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
 
@@ -125,4 +138,31 @@ require('lazy').setup({
   },
 })
 
+require('java').setup()
+
+local config = {
+  cmd = {
+    '/usr/', -- Explicitly use this JDK
+    '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+    '-Dosgi.bundles.defaultStartLevel=4',
+    '-Declipse.product=org.eclipse.jdt.ls.core.product',
+    '-Dlog.protocol=true',
+    '-Dlog.level=ALL',
+    '-Xmx1G',
+    '--add-modules=ALL-SYSTEM',
+    '--add-opens',
+    'java.base/java.util=ALL-UNNAMED',
+    '--add-opens',
+    'java.base/java.lang=ALL-UNNAMED',
+    '-jar',
+    '/path/to/jdtls/plugins/org.eclipse.equinox.launcher_*.jar',
+    '-configuration',
+    '/path/to/jdtls/config_linux',
+    '-data',
+    workspace_dir,
+  },
+  -- root_dir = require('jdtls.setup').find_root { 'gradlew', 'mvnw', '.git' },
+}
+
+require('lspconfig').jdtls.setup { config }
 -- vim: ts=2 sts=2 sw=2 et
